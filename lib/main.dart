@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:provider/provider.dart';
+import 'package:shopchat_app/models/navigator_service.dart';
 import 'package:shopchat_app/provider/push_notification_service.dart';
 import 'package:theme_provider/theme_provider.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -16,7 +17,7 @@ import 'screens/add/adding_images_screen.dart';
 import 'screens/add/price_and_location_screen.dart';
 import 'screens/home/product_detail_screen.dart';
 import 'screens/chats/chat_screen.dart';
-import 'screens/tabs/users_chat_screen.dart';
+import 'models/navigator_service.dart';
 
 
 void main() async {
@@ -24,6 +25,7 @@ void main() async {
   //Método que permite asegurar que cuando se ejecute, se dispone de un context
   WidgetsFlutterBinding.ensureInitialized();
   //Implementamos el método que inicializa la app
+  setupLocator();
   await PushNotificationService.initializeApp();
 
   runApp(MyApp());
@@ -105,6 +107,15 @@ class MyApp extends StatelessWidget {
               child: ThemeConsumer(
                 child: Builder(
                   builder: (themeContext) => MaterialApp(
+                    navigatorKey: locator<NavigatorService>().navigatorKey,
+                    onGenerateRoute: (routeSettings) {
+                      switch (routeSettings.name) {
+                        case "chat":
+                          return MaterialPageRoute(builder: (context) => UsersChatScreen());
+                        default:
+                          return MaterialPageRoute(builder: (context) => MyApp());
+                      }
+                    },
                     title: 'BookLord',
                     theme: ThemeProvider.themeOf(themeContext).data,
                     debugShowCheckedModeBanner: false,

@@ -24,53 +24,53 @@ class _BottomNavigationScreenState extends State<BottomNavigationScreen> {
   late List<Map<String, Object>> _pages;
 
   @override
-  void initState() async {
+  void initState() {
   
     //Obtenemos la instancia de FirebaseMessaging
     //static FirebaseMessaging messaging = FirebaseMessaging.instance;
   
-    final fcm = FirebaseMessaging.instance;
-
-    FirebaseMessaging.onMessage.listen(( RemoteMessage message ) {
-      RemoteNotification? notification = message.notification;
-      AndroidNotification? android = message.notification!.android;
-    });
-
-    FirebaseMessaging.onMessageOpenedApp.listen(( RemoteMessage message ) {
-      print('A new onMessageOpenedApp event was published!');
-      Navigator.pushNamed(context, '/message',
-      //MesageArguments, 
-          arguments: MessageArguments( message, true));
-    });
+    // final fcm = FirebaseMessaging.instance;
+    //
+    // FirebaseMessaging.onMessage.listen(( RemoteMessage message ) {
+    //   RemoteNotification? notification = message.notification;
+    //   AndroidNotification? android = message.notification!.android;
+    // });
+    //
+    // FirebaseMessaging.onMessageOpenedApp.listen(( RemoteMessage message ) {
+    //   print('A new onMessageOpenedApp event was published!');
+    //   // Navigator.pushNamed(context, '/message',
+    //   // //MesageArguments,
+    //   //     arguments: MessageArguments( message, true));
+    // });
 
 
 
 //await Firebase.initializeApp();
 
-    fcm.configure(
-
-      onMessage: (msg) {
-        print('onMessage');
-        print( msg );
-        return;
-      },
-
-      onLaunch: (msg) {
-        print('onLaunch');
-        print(msg);
-        return Navigator.of(context).pushNamed(
-          UsersChatScreen.routeName,
-        );
-      },
-
-      onResume: (msg) {
-        print('onResume');
-        print(msg);
-        return Navigator.of(context).pushNamed(
-          UsersChatScreen.routeName,
-        );
-      },
-    );
+    // fcm.configure(
+    //
+    //   onMessage: (msg) {
+    //     print('onMessage');
+    //     print( msg );
+    //     return;
+    //   },
+    //
+    //   onLaunch: (msg) {
+    //     print('onLaunch');
+    //     print(msg);
+    //     return Navigator.of(context).pushNamed(
+    //       UsersChatScreen.routeName,
+    //     );
+    //   },
+    //
+    //   onResume: (msg) {
+    //     print('onResume');
+    //     print(msg);
+    //     return Navigator.of(context).pushNamed(
+    //       UsersChatScreen.routeName,
+    //     );
+    //   },
+    // );
 
     //fcm.subscribeToTopic('chats');
 

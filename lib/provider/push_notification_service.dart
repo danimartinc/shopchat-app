@@ -3,6 +3,10 @@ import 'dart:async';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 
+import 'package:flutter/material.dart';
+import 'package:shopchat_app/models/navigator_service.dart';
+import 'package:shopchat_app/screens/tabs/users_chat_screen.dart';
+
 
 // SHA1: 33:E2:CC:3B:84:7C:A4:7C:2C:CC:7D:4F:96:A8:A8:52:80:CB:1D:1C
 // P8 - KeyID: VYZH37GGZ9
@@ -26,24 +30,28 @@ class PushNotificationService {
   //Método asíncrono que retorna un Future
   static Future _backgroundHandler( RemoteMessage message ) async {
     //Mostramos el ID del mensaje
-    //print( 'onBackground Handler ${ message.messageId }');
+    print( 'onBackground Handler ${ message.messageId }');
     print( message.data );
     //Añadimos información al flujo del messagesStream a la notificación
-    _messageStream.add( message.data['product'] ?? 'No data' );
+    //_messageStream.add( message.data['product'] ?? 'No data' );
+    locator<NavigatorService>().navigateTo('chat');
     //_messageStream.add( message.notification!.title ?? 'No title' );
   }
 
   //Método 
   static Future _onMessageHandler( RemoteMessage message ) async {
-    //print( 'onMessage Handler ${ message.messageId }');
+    print( 'onMessage Handler ${ message.messageId }');
     print( message.data );
+    print( message.notification );
+    locator<NavigatorService>().navigateTo('chat');
     _messageStream.add( message.data['product'] ?? 'No data' );
     //_messageStream.add( message.notification!.title ?? 'No title' );
   }
 
   static Future _onMessageOpenApp( RemoteMessage message ) async {
-    //print( 'onMessageOpenApp Handler ${ message.messageId }');
+    print( 'onMessageOpenApp Handler ${ message.messageId }');
     print( message.data );
+    locator<NavigatorService>().navigateTo('chat');
     _messageStream.add( message.data['product'] ?? 'No data' );
     //_messageStream.add( message.notification!.title ?? 'No title' );
   }
