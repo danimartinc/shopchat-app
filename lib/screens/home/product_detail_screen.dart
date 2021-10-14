@@ -183,6 +183,9 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
           ),
           builder: ( context, userSnapshot ) {
 
+          //Comprobamos que si tenemos información
+           if ( userSnapshot.hasData ) {
+             //Wdiget con la información
             userData = userSnapshot.data;
 
             return FutureBuilder(
@@ -557,7 +560,13 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                     ),
                   );
                 });
-          }),
+          } else {
+            //CircularProgressIndicator(), permite indicar al usuario que se está cargando infromación 
+            return Center(child: CircularProgressIndicator(strokeWidth: 2 ) );
+          }
+
+            
+    }),
       floatingActionButton: !isMe || !isSold
           ? FloatingActionButton.extended(
               backgroundColor: Theme.of(context).primaryColor,

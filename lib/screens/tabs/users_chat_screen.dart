@@ -65,6 +65,8 @@ class _UsersChatScreenState extends State<UsersChatScreen> {
                           .get(),
                       builder: (context, receiverData ) {
 
+                        
+
                         if ( receiverData.connectionState ==
                             ConnectionState.waiting) {
                           return Container();
@@ -76,7 +78,10 @@ class _UsersChatScreenState extends State<UsersChatScreen> {
                         receiverId = receiverData.data!['uid'];
                         receiverProfile = receiverData.data!['profilePicture'];
 
-                        return Container(
+                        //Comprobamos que si tenemos información
+                            if ( snapshot.hasData ) {
+                              //Wdiget con la información
+                              return Container(
                           margin: EdgeInsets.symmetric(
                             vertical: 0,
                           ),
@@ -137,6 +142,11 @@ class _UsersChatScreenState extends State<UsersChatScreen> {
                             ],
                           ),
                         );
+                            } else {
+                              //CircularProgressIndicator(), permite indicar al usuario que se está cargando infromación 
+                              return Center(child: CircularProgressIndicator(strokeWidth: 2 ) );
+                            }
+          
                       });
                 } else
                   return Container();

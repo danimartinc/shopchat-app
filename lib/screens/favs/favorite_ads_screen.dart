@@ -30,7 +30,7 @@ class _FavoriteAdsScreenState extends State<FavoriteAdsScreen> {
           );
         }
 
-        var docs = snapshot.data!.docs;
+        var documents = snapshot.data!.docs;
         
         if ( !snapshot.hasData ) {
           return Center(
@@ -41,11 +41,11 @@ class _FavoriteAdsScreenState extends State<FavoriteAdsScreen> {
         return Padding(
           padding: EdgeInsets.all(10),
           child: GridView.builder(
-            itemCount: docs.length,
+            itemCount: documents.length,
             itemBuilder: (context, i) {
               return AdItem(
-                docs[i],
-                docs[i]['uid'] == uid,
+                documents[i],
+                documents[i]['uid'] == uid,
                 uid,
               );
             },

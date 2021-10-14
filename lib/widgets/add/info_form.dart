@@ -42,6 +42,9 @@ class _BookInfoFormState extends State<BookInfoForm> {
     
     if (isValidate) {
 
+      print('Entra en isValidate');
+      
+
       _formKey.currentState!.save();
 
       Provider.of<AdProvider>(

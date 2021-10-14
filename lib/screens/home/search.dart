@@ -6,7 +6,10 @@ import 'package:flutter/material.dart';
 import 'package:shopchat_app/widgets/home/ad_item.dart';
 
 class Search extends SearchDelegate {
+
   final List<dynamic> docs;
+
+  //Constructor
   Search(this.docs);
 
   @override

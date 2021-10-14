@@ -23,13 +23,17 @@ class _MyAdsState extends State<MyAds> {
           .snapshots(),
       builder: ( context, snapshot ) {
 
-        if (snapshot.connectionState == ConnectionState.waiting) {
+       /* if ( snapshot.hasData ) {
           return Center(
             child: CircularProgressIndicator(),
           );
-        }
+        }*/
 
-        var docs = snapshot.data!.docs;
+            //Comprobamos que si tenemos información
+           if ( snapshot.hasData ) {
+             //Wdiget con la información
+            
+             var documents = snapshot.data!.docs;
 
         if( snapshot.data!.docs.length == 0 ) {
           return Center(
@@ -39,11 +43,11 @@ class _MyAdsState extends State<MyAds> {
         return Padding(
           padding: EdgeInsets.all(10),
           child: GridView.builder(
-            itemCount: docs.length,
+            itemCount: documents.length,
             itemBuilder: (context, i) {
               return AdItem(
-                docs[i],
-                docs[i]['uid'] == uid,
+                documents[i],
+                documents[i]['uid'] == uid,
                 uid,
               );
             },
@@ -55,6 +59,12 @@ class _MyAdsState extends State<MyAds> {
             ),
           ),
         );
+          } else {
+            //CircularProgressIndicator(), permite indicar al usuario que se está cargando infromación 
+            return Center(child: CircularProgressIndicator(strokeWidth: 2 ) );
+          }
+
+       
       },
     );
   }

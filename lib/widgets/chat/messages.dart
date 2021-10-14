@@ -30,7 +30,7 @@ class Messages extends StatelessWidget {
             );
           }
             
-          var docs = snapshot.data!.docs;
+          var documents = snapshot.data!.docs;
 
           return ListView.builder(
             reverse: true,
@@ -39,10 +39,10 @@ class Messages extends StatelessWidget {
               child: Padding(
                 padding: EdgeInsets.all(5),
                 child: MessageBubble(
-                  message: docs[i]['message'],
-                  isMe: docs[i]['senderId'] == senderId,
-                  time: (docs[i]['timeStamp'] as Timestamp).toDate(),
-                  imageUrl: docs[i]['imageUrl'],
+                  message: documents[i]['message'],
+                  isMe: documents[i]['senderId'] == senderId,
+                  time: (documents[i]['timeStamp'] as Timestamp).toDate(),
+                  imageUrl: documents[i]['imageUrl'],
                 ),
               ),
             ),

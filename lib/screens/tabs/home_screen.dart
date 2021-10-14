@@ -23,7 +23,7 @@ class _HomeScreenState extends State<HomeScreen> {
   final uid = FirebaseAuth.instance.currentUser!.uid;
 
   List<dynamic> documents = [];
-  List<AdModel?> prods = [];
+  List<AdModel> prods = [];
   bool isProd = false;
   late double distance;
   RangeValues range = RangeValues(0, 2000);
@@ -37,7 +37,7 @@ class _HomeScreenState extends State<HomeScreen> {
       range = rv;
       prods = prods.where(
         (element) {
-          print('element price is ${element!.price}');
+          print('element price is ${element.price}');
           print('range start is ${range.start} and ${range.end}');
           return (element.price! >= range.start) && (element.price! <= range.end);
         },
@@ -102,25 +102,25 @@ class _HomeScreenState extends State<HomeScreen> {
 
                         for (int i = 0; i < prods.length; i++) {
 
-                          prods[i]!.fromLoc =
+                          prods[i].fromLoc =
                               Provider.of<AdProvider>(context, listen: false)
                                   .getDistanceFromCoordinates2(
-                            prods[i]!.location!.latitude!,
-                            prods[i]!.location!.longitude!,
+                            prods[i].location!.latitude!,
+                            prods[i].location!.longitude!,
                             locData.latitude!,
                             locData.longitude!,
                           );
 
-                          print('distance is ${(prods[i]!.fromLoc)}');
+                          print('distance is ${(prods[i].fromLoc)}');
 
                         }
 
                         prods.sort((m1, m2) {
-                          return m1!.fromLoc!.compareTo( m2!.fromLoc! );
+                          return m1.fromLoc!.compareTo( m2.fromLoc! );
                         });
                         print(
                           prods.map(
-                            (e) => print('final distance is ${e!.fromLoc}'),
+                            (e) => print('final distance is ${e.fromLoc}'),
                           ),
                         );
                         setState(() {
@@ -172,23 +172,23 @@ class _HomeScreenState extends State<HomeScreen> {
                 itemCount: prods.length,
                 itemBuilder: (context, i) {
                   dynamic document = {
-                    'id': prods[i]!.id,
-                    'title': prods[i]!.title,
-                    'author': prods[i]!.author,
-                    'description': prods[i]!.description,
-                    'price': prods[i]!.price,
-                    'condition': prods[i]!.condition,
-                    'images': prods[i]!.images,
-                    'createdAt': prods[i]!.createdAt,
-                    'categories': prods[i]!.categories,
+                    'id': prods[i].id,
+                    'title': prods[i].title,
+                    'author': prods[i].author,
+                    'description': prods[i].description,
+                    'price': prods[i].price,
+                    'condition': prods[i].condition,
+                    'images': prods[i].images,
+                    'createdAt': prods[i].createdAt,
+                    'categories': prods[i].categories,
                     'location': {
-                      'latitude': prods[i]!.location!.latitude!,
-                      'longitude': prods[i]!.location!.longitude!,
-                      'address': prods[i]!.location!.address!,
+                      'latitude': prods[i].location!.latitude!,
+                      'longitude': prods[i].location!.longitude!,
+                      'address': prods[i].location!.address!,
                     },
-                    'isFav': prods[i]!.isFav,
-                    'isSold': prods[i]!.isSold,
-                    'uid': prods[i]!.userId,
+                    'isFav': prods[i].isFav,
+                    'isSold': prods[i].isSold,
+                    'uid': prods[i].userId,
                   };
 
                   return AdItem(
@@ -212,70 +212,80 @@ class _HomeScreenState extends State<HomeScreen> {
                   //.where('isSold', isEqualTo: false)
                   .snapshots(),
               builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return Center(
-                    child: CircularProgressIndicator(),
-                  );
-                }
 
-                final fcm = FirebaseMessaging.instance;
+            //Comprobamos que si tenemos información
+            if ( snapshot.hasData ) {
 
-                fcm.getToken().then((token) => FirebaseFirestore.instance
-                        .collection('users')
-                        .doc(uid)
-                        .update(
-                      {'token': token},
-                    ));
-                                
-                var documents = snapshot.data!.docs;
+              //Wdiget con la información
+              final fcm = FirebaseMessaging.instance;
 
-                prods = documents.map<AdModel>( (documents) => AdModel(
-                        id: documents['id'].toString(),
-                        createdAt: documents['createdAt'],
-                        price: documents['price'],
-                        title: documents['title'],
-                        author: documents['author'],
-                        categories: documents['categories'],
-                        description: documents['description'],
-                        images: documents['images'],
-                        userId: documents['uid'],
-                        location: AdLocation(
-                          latitude: documents['location']['latitude'],
-                          longitude: documents['location']['longitude'],
-                          address: documents['location']['address'],
+                  fcm.getToken().then((token) => FirebaseFirestore.instance
+                          .collection('users')
+                          .doc(uid)
+                          .update(
+                        {'token': token},
+                      ));
+                                  
+                  var documents = snapshot.data!.docs;
+
+                  prods = documents.map<AdModel>( (documents) => AdModel(
+                          id: documents['id'].toString(),
+                          createdAt: documents['createdAt'],
+                          price: documents['price'].toDouble(),
+                          title: documents['title'],
+                          author: documents['author'],
+                          categories: documents['categories'],
+                          description: documents['description'],
+                          images: documents['images'],
+                          userId: documents['uid'],
+                          location: AdLocation(
+                            latitude: documents['location']['latitude'],
+                            longitude: documents['location']['longitude'],
+                            address: documents['location']['address'],
+                          ),
+                          condition: documents['condition'],
+                          isSold: documents['isSold'],
+                          isFav: documents['isFav'],
+                          fromLoc: 0.0, fileImages: [], imageAssets: [],
                         ),
-                        condition: documents['condition'],
-                        isSold: documents['isSold'],
-                        isFav: documents['isFav'],
-                        fromLoc: 0.0,
-                      ),
-                    )
-                    .toList();
+                      )
+                      .toList();
 
-                if (snapshot.data!.docs.length == 0) {
-                  return Center(
-                    child: Text('No ads here'),
-                  );
-                }
-                return Padding(
-                  padding: EdgeInsets.all(10),
-                  child: GridView.builder(
-                    itemCount: documents.length,
-                    itemBuilder: (context, i) {
-                      return AdItem(
-                        documents[i],
-                        documents[i]['uid'] == uid,
-                        uid,
-                      );
-                    },
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      childAspectRatio: 3 / 2,
-                      crossAxisCount: 2,
-                      mainAxisSpacing: 10,
-                      crossAxisSpacing: 10,
+                  if (snapshot.data!.docs.length == 0) {
+                    return Center(
+                      child: Text('No ads here'),
+                    );
+                  }
+                  return Padding(
+                    padding: EdgeInsets.all(10),
+                    child: GridView.builder(
+                      itemCount: documents.length,
+                      itemBuilder: (context, i) {
+                        return AdItem(
+                          documents[i],
+                          documents[i]['uid'] == uid,
+                          uid,
+                        );
+                      },
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        childAspectRatio: 3 / 2,
+                        crossAxisCount: 2,
+                        mainAxisSpacing: 10,
+                        crossAxisSpacing: 10,
+                      ),
                     ),
-                  ),
-                );
+                  );
+            } else {
+              //CircularProgressIndicator(), permite indicar al usuario que se está cargando infromación 
+              return Center(child: CircularProgressIndicator(strokeWidth: 2 ) );
+            }
+                  /*if (snapshot.connectionState == ConnectionState.waiting) {
+                    return Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }*/
+
+                
               },
             ),
     );

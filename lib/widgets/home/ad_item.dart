@@ -7,12 +7,12 @@ import 'package:shopchat_app/screens/home/product_detail_screen.dart';
 
 class AdItem extends StatefulWidget {
 
-  final dynamic docs;
+  final dynamic documents;
   final bool isMe;
   final String myId;
 
   AdItem(
-    this.docs,
+    this.documents,
     this.isMe,
     this.myId,
   );
@@ -30,15 +30,15 @@ class _AdItemState extends State<AdItem> {
         onTap: () => Navigator.of(context).pushNamed(
           ProductDetailScreen.routeName,
           arguments: {
-            'docs': widget.docs,
+            'docs': widget.documents,
             'isMe': widget.isMe,
           },
         ),
         child: GridTile(
           child: Hero(
-            tag: widget.docs['id'],
+            tag: widget.documents['id'],
             child: CachedNetworkImage(
-              imageUrl: widget.docs['images'][0],
+              imageUrl: widget.documents['images'][0],
               errorWidget: (context, url, error) => Icon(Icons.error),
               fit: BoxFit.cover,
             ),
@@ -68,11 +68,11 @@ class _AdItemState extends State<AdItem> {
                       onPressed: () {
                         FirebaseFirestore.instance
                             .collection('products')
-                            .doc(widget.docs['id'].toString())
-                            .update({'isFav': !widget.docs['isFav']} );
+                            .doc(widget.documents['id'].toString())
+                            .update({'isFav': !widget.documents['isFav']} );
                       },
                       alignment: Alignment.center,
-                      icon: widget.docs['isFav']
+                      icon: widget.documents['isFav']
                           ? Icon(
                               Icons.favorite,
                               color: Colors.red[700],
@@ -91,11 +91,11 @@ class _AdItemState extends State<AdItem> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  widget.docs['title'],
+                  widget.documents['title'],
                   textAlign: TextAlign.center,
                   style: TextStyle(fontFamily: 'Poppins'),
                 ),
-                if (widget.docs['isSold'])
+                if (widget.documents['isSold'])
                   Text(
                     'Sold',
                     textAlign: TextAlign.center,
@@ -105,16 +105,16 @@ class _AdItemState extends State<AdItem> {
                       color: Colors.white,
                     ),
                   ),
-                if (!widget.docs['isSold'])
+                if (!widget.documents['isSold'])
                   Text(
-                    widget.docs['price'] == 0
+                    widget.documents['price'] == 0
                         ? 'Donate'
-                        : '₹${widget.docs['price'].toString()}',
+                        : '₹${widget.documents['price'].toString()}',
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
-                      color: widget.docs['price'] == 0
+                      color: widget.documents['price'] == 0
                           ? Colors.pink[200]
                           : Colors.white,
                     ),

@@ -38,12 +38,11 @@ class MyApp extends StatelessWidget {
     return FutureBuilder(
         future: Firebase.initializeApp(),
         builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-          return MultiProvider(
+
+              //Comprobamos que si tenemos información
+           if ( snapshot.hasData ) {
+             //Wdiget con la información
+               return MultiProvider(
             providers: [
               ChangeNotifierProvider(
                 create: (context) => AdProvider(),
@@ -155,6 +154,17 @@ class MyApp extends StatelessWidget {
               ),
             ),
           );
+          } else {
+            //CircularProgressIndicator(), permite indicar al usuario que se está cargando infromación 
+            return Center(child: CircularProgressIndicator(strokeWidth: 2 ) );
+          }
+
+          /*if ( snapshot.connectionState == ConnectionState.waiting ) {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          }*/
+       
         });
   }
 }
