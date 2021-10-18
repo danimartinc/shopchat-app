@@ -9,11 +9,11 @@ import 'package:image_picker/image_picker.dart';
 import 'package:shopchat_app/provider/ad_provider.dart';
 
 class NewMessage extends StatefulWidget {
-  final String? documentId;
+  final String documentId;
   final String senderId;
   final String receiverId;
   NewMessage({
-    this.documentId,
+    required this.documentId,
     required this.senderId,
     required this.receiverId,
   });

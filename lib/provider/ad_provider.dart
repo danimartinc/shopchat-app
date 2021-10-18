@@ -34,7 +34,7 @@ class AdProvider with ChangeNotifier {
   String getLocationFromLatLang({ double? latitude, double? longitude }) {
 
     //TODO: Cambiar API KEY
-    final API_KEY = 'AIzaSyDD08hvn-I_wp2_zq77dHcgi8a2hrd1o68';
+    final API_KEY = 'AIzaSyC9oIhVx-R9orUyVXorJSqn_AAfVn0tI9o';
     final url = 'https://maps.googleapis.com/maps/api/staticmap?center=$latitude,$longitude&zoom=16&size=600x300&maptype=roadmap&markers=color:blue%7Clabel:S%7C40.702147,-74.015794&markers=color:green%7Clabel:G%7C40.711614,-74.012318&markers=color:red%7Clabel:A%7C$latitude,$longitude&key=$API_KEY';
     return url;
   }

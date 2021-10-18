@@ -12,7 +12,7 @@
         android:label="shopchat_app"
         android:icon="@mipmap/ic_launcher">
 
-        <meta-data android:name="com.google.android.geo.API_KEY" android:value="AIzaSyCR1_gIXbLa3EOI1BB-VGfj4jo9jj1KvX4"/>
+        <meta-data android:name="com.google.android.geo.API_KEY" android:value=""/>
 
         <activity
             android:name=".MainActivity"

@@ -7,6 +7,7 @@ import 'dart:convert';
 import 'package:location/location.dart';
 import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;
+//import 'package:flutter_geocoder/geocoder.dart';
 
 import 'package:shopchat_app/provider/ad_provider.dart';
 import 'package:shopchat_app/models/ad_location.dart';
@@ -22,23 +23,25 @@ class PriceAndLocationScreen extends StatefulWidget {
 
 class _PriceAndLocationScreenState extends State<PriceAndLocationScreen> {
 
-  var isDonate = false;
+  var isDonate     = false;
   var currLocation = '';
   double? latitude;
   double? longitude;
-  var containerHeight = 80.0;
-  var textController = TextEditingController();
+  var containerHeight   = 80.0;
+  var textController    = TextEditingController();
   var addressController = TextEditingController();
   var isLoading = false;
   String mapUrl = '';
   late BuildContext ctx;
 
   Future<void> _openMapsScreen() async {
+
     final location = Location();
 
     final locData = await location.getLocation();
     latitude = locData.latitude;
     longitude = locData.longitude;
+
     final locationPreview = await Navigator.of(context).push(
       MaterialPageRoute(
         fullscreenDialog: true,
@@ -61,31 +64,30 @@ class _PriceAndLocationScreenState extends State<PriceAndLocationScreen> {
       print('currentLocation is $locationPreview');
 
       final loc = locationPreview as LatLng;
-      latitude = loc.latitude;
+      latitude  = loc.latitude;
       longitude = loc.longitude;
       //TODO: Cambiar API KEY
-      final API_KEY = 'AIzaSyDD08hvn-I_wp2_zq77dHcgi8a2hrd1o68';
+      final API_KEY = 'AIzaSyC9oIhVx-R9orUyVXorJSqn_AAfVn0tI9o';
       //var addressUrl = 'https://maps.googleapis.com/maps/api/geocode/json?latlng=$latitude,$longitude&key=$API_KEY';
 
  
 
-    //Endpoint para realizar el Login
-    final uri = Uri.parse('https://maps.googleapis.com/maps/api/geocode/json?latlng=$latitude,$longitude&key=$API_KEY');
+      //Endpoint para realizar el Login
+      final uri = Uri.parse('https://maps.googleapis.com/maps/api/flutter_geocoder/json?latlng=$latitude,$longitude&key=$API_KEY');
 
-    //Mapear la respuesta al modelo de tipo Usuario
-    //Petición POST, en la cual enviamos el path del URL por argumento, obtenemos el apiURL desde el Enviroment
-    final response = await http.post( uri );
+      //Mapear la respuesta al modelo de tipo Usuario
+      //Petición POST, en la cual enviamos el path del URL por argumento, obtenemos el apiURL desde el Enviroment
+      final response = await http.post( uri );
 
       setState(() {
         mapUrl = Provider.of<AdProvider>(context, listen: false)
-            .getLocationFromLatLang(
-          latitude: loc.latitude,
-          longitude: loc.longitude,
-        );
+          .getLocationFromLatLang(
+            latitude: loc.latitude,
+            longitude: loc.longitude,
+          );
         print('mapUrl is $mapUrl');
 
-        addressController.text =
-            json.decode(response.body)['results'][0]['formatted_address'];
+        addressController.text = json.decode(response.body)['results'][0]['formatted_address'];
       });
     }
   }
@@ -99,7 +101,7 @@ class _PriceAndLocationScreenState extends State<PriceAndLocationScreen> {
           title: Text('Invalid Price'),
           content: Text('Please enter a valid price'),
           actions: [
-            RaisedButton(
+            ElevatedButton(
               child: Text('OK'),
               onPressed: () {
                 Navigator.of(context).pop();
@@ -115,7 +117,7 @@ class _PriceAndLocationScreenState extends State<PriceAndLocationScreen> {
           title: Text('Invalid input'),
           content: Text('Please provide your location to proceed further'),
           actions: [
-            RaisedButton(
+            ElevatedButton(
               child: Text('Provide Location'),
               onPressed: () {
                 getUserLocation();
@@ -139,7 +141,7 @@ class _PriceAndLocationScreenState extends State<PriceAndLocationScreen> {
     longitude = locData.longitude;
 
     //TODO: Cambiar API KEY
-    final API_KEY = 'AIzaSyDD08hvn-I_wp2_zq77dHcgi8a2hrd1o68';
+    final API_KEY = 'AIzaSyC9oIhVx-R9orUyVXorJSqn_AAfVn0tI9o';
    // var addressUrl = 'https://maps.googleapis.com/maps/api/geocode/json?latlng=$latitude,$longitude&key=$API_KEY';
 
         //Endpoint para realizar el Login
@@ -156,16 +158,24 @@ class _PriceAndLocationScreenState extends State<PriceAndLocationScreen> {
         latitude: latitude,
         longitude: longitude,
       );
+      
       print('mapUrl is $mapUrl');
 
+      print(json.decode(response.body));
+
       addressController.text = json.decode(response.body)['results'][0]['formatted_address'];
+
+      
+
     });
   }
 
   Future<void> submitLocation() async {
+
     if (isDonate) {
       textController.text = '0.0';
     }
+    
     Provider.of<AdProvider>(
       context,
       listen: false,
@@ -317,21 +327,28 @@ class _PriceAndLocationScreenState extends State<PriceAndLocationScreen> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
-                            FlatButton.icon(
-                              textColor: Theme.of(context).primaryColor,
-                              icon: Icon(
+                            TextButton.icon(
+                              label: Text( 'Current Location', ),
+                              onPressed: getUserLocation,
+                              icon:  Icon(
                                 Icons.location_on_outlined,
                               ),
-                              label: Text('Current location'),
-                              onPressed: getUserLocation,
+                              style: TextButton.styleFrom(
+                                primary: Theme.of( context ).primaryColor,
+                              ),       
                             ),
-                            FlatButton.icon(
-                              textColor: Theme.of(context).primaryColor,
-                              icon: Icon(
+
+
+                            TextButton.icon(
+                              label: Text( 'Choose Location' ),
+                              onPressed: _openMapsScreen,
+                              icon:  Icon(
                                 Icons.map,
                               ),
-                              label: Text('Choose location'),
-                              onPressed: _openMapsScreen,
+                              style: TextButton.styleFrom(
+                                primary: Theme.of( context ).primaryColor,
+                              ),
+        
                             ),
                           ],
                         ),
@@ -340,6 +357,7 @@ class _PriceAndLocationScreenState extends State<PriceAndLocationScreen> {
                   ),
                 ],
               ),
+                   
       ),
       bottomNavigationBar: BottomButton(
         'Post',

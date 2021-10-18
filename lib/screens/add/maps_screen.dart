@@ -29,7 +29,7 @@ class _GoogleMapScreenState extends State<GoogleMapScreen> {
 
   Set<Marker>? get getMarker {
     
-    if (pickedLocation == null && widget.isEditable ) {
+    if ( pickedLocation == null && widget.isEditable ) {
       return null;
     } else if ( widget.isEditable ) {
       return {

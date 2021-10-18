@@ -38,7 +38,7 @@ class BottomButton extends StatelessWidget {
             ),
           ),
           //Implemento un operador ternario que nos permite crear el botón de manera dinámica
-          onPressed: () => fn
+          onPressed: () => fn()
         );
 
   }

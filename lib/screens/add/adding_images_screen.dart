@@ -23,8 +23,8 @@ class AddingImagesScreen extends StatefulWidget {
 
 class _AddingImagesScreenState extends State<AddingImagesScreen> {
 
-  late File _storedImage;
-  late File _pickedImage;
+  File? _storedImage;
+  File? _pickedImage;
   late BuildContext ctx;
   int current = 0;
   List<File> pathList = [];
@@ -86,14 +86,14 @@ class _AddingImagesScreenState extends State<AddingImagesScreen> {
 
     setState(() {
       _storedImage = File(imageUri.path);
-      pathList.add(_storedImage);
+      pathList.add( _storedImage! );
       listt = pathList;
     });
 
     //very important lines!
     final appDir = await pPath.getApplicationDocumentsDirectory();
-    final fileName = path.basename(_storedImage.path);
-    final savedImage = await _storedImage.copy('${appDir.path}/$fileName');
+    final fileName = path.basename(_storedImage!.path);
+    final savedImage = await _storedImage!.copy('${appDir.path}/$fileName');
     _pickedImage = savedImage;
   }
 

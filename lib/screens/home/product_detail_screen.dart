@@ -39,7 +39,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
   
   String mapUrl = '';
   int current = 0;
-  late AdLocation? loc;
+  AdLocation? loc;
   late BuildContext ctx;
   var docId;
   bool isSold = false;
@@ -80,7 +80,10 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
     ctx = context;
     UserModel? userData;
     final args = ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
-    final dynamic documents = args['documents'];
+    dynamic documents = args['documents'];
+
+
+      print( 'Compruebo args ${ args[documents] }');
     docId = documents['id'];
     final bool isMe = args['isMe'];
     isSold = documents['isSold'];
@@ -122,7 +125,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                           content:
                               Text('Are you sure you want to delete this ad ?'),
                           actions: [
-                            FlatButton(
+                            TextButton(
                               child: Text(
                                 'NO',
                                 style: TextStyle(
@@ -131,15 +134,27 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                               ),
                               onPressed: () => Navigator.of(context).pop(),
                             ),
-                            RaisedButton(
-                              color: Theme.of(context).primaryColor,
-                              textColor: Colors.white,
+                            
+                            ElevatedButton(
+                              style:  ElevatedButton.styleFrom(
+                                primary: Theme.of(context).primaryColor,
+                                onPrimary: Colors.white,
+                                //elevation: 0,
+                                //tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                                //shape: RoundedRectangleBorder(
+                                  //borderRadius: BorderRadius.zero,
+                                //),
+                              ),
+                              //color: Theme.of(context).primaryColor,
+                              //textColor: Colors.white,
                               child: Text('YES'),
                               onPressed: () {
                                 deleteAd(context);
                                 Navigator.of(context).pop();
                               },
-                            )
+                            ),
+
+                            
                           ],
                         ),
                       );
@@ -151,7 +166,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                           content: Text(
                               'Your ad won\'t be visible to the users anymore ?'),
                           actions: [
-                            FlatButton(
+                            TextButton(
                               child: Text(
                                 'NO',
                                 style: TextStyle(
@@ -160,14 +175,26 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                               ),
                               onPressed: () => Navigator.of(context).pop(),
                             ),
-                            RaisedButton(
-                              color: Theme.of(context).primaryColor,
-                              textColor: Colors.white,
+
+                            ElevatedButton(
+                              style:  ElevatedButton.styleFrom(
+                                primary: Theme.of(context).primaryColor,
+                                onPrimary: Colors.white,
+                                //elevation: 0,
+                                //tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                                //shape: RoundedRectangleBorder(
+                                  //borderRadius: BorderRadius.zero,
+                                //),
+                              ),
+                              //color: Theme.of(context).primaryColor,
+                              //textColor: Colors.white,
                               child: Text('YES'),
                               onPressed: () {
                                 markAsSold(context);
                               },
-                            )
+                            ),
+
+                        
                           ],
                         ),
                       );

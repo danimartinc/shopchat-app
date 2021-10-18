@@ -13,7 +13,7 @@ class BookInfoForm extends StatefulWidget {
 
 class _BookInfoFormState extends State<BookInfoForm> {
 
-  final _formKey = GlobalKey<FormState>();
+  GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   
   String title      = '';
   String desc       = '';
@@ -34,6 +34,8 @@ class _BookInfoFormState extends State<BookInfoForm> {
   var isLogin = true;
 
   void trySubmit() {
+
+     print('Entra en submite');
 
     final isValidate = _formKey.currentState!.validate();
     
