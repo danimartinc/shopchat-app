@@ -39,13 +39,13 @@ class _PriceAndLocationScreenState extends State<PriceAndLocationScreen> {
     final location = Location();
 
     final locData = await location.getLocation();
-    latitude = locData.latitude;
-    longitude = locData.longitude;
+    double? latitude = locData.latitude;
+    double? longitude = locData.longitude;
 
     final locationPreview = await Navigator.of(context).push(
       MaterialPageRoute(
         fullscreenDialog: true,
-        builder: (context) {
+        builder: ( context ) {
           return GoogleMapScreen(
             placeLocation: AdLocation(
               latitude: latitude,

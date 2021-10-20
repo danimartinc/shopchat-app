@@ -23,9 +23,9 @@ class _HomeScreenState extends State<HomeScreen> {
   final uid = FirebaseAuth.instance.currentUser!.uid;
 
   List<dynamic> documents = [];
-  List<AdModel> prods = [];
+  List<AdModel?> prods = [];
   bool isProd = false;
-  late double distance;
+  double? distance;
   RangeValues range = RangeValues(0, 2000);
 
   void setFilters( RangeValues rv ) {
@@ -37,7 +37,7 @@ class _HomeScreenState extends State<HomeScreen> {
       range = rv;
       prods = prods.where(
         (element) {
-          print('element price is ${element.price}');
+          print('element price is ${element!.price}');
           print('range start is ${range.start} and ${range.end}');
           return (element.price! >= range.start) && (element.price! <= range.end);
         },
@@ -102,25 +102,25 @@ class _HomeScreenState extends State<HomeScreen> {
 
                         for (int i = 0; i < prods.length; i++) {
 
-                          prods[i].fromLoc =
+                          prods[i]!.fromLoc =
                               Provider.of<AdProvider>(context, listen: false)
                                   .getDistanceFromCoordinates2(
-                            prods[i].location!.latitude!,
-                            prods[i].location!.longitude!,
+                            prods[i]!.location!.latitude!,
+                            prods[i]!.location!.longitude!,
                             locData.latitude!,
                             locData.longitude!,
                           );
 
-                          print('distance is ${(prods[i].fromLoc)}');
+                          print('distance is ${(prods[i]!.fromLoc)}');
 
                         }
 
                         prods.sort((m1, m2) {
-                          return m1.fromLoc!.compareTo( m2.fromLoc! );
+                          return m1!.fromLoc!.compareTo( m2!.fromLoc! );
                         });
                         print(
                           prods.map(
-                            (e) => print('final distance is ${e.fromLoc}'),
+                            (e) => print('final distance is ${e!.fromLoc}'),
                           ),
                         );
                         setState(() {
@@ -172,23 +172,23 @@ class _HomeScreenState extends State<HomeScreen> {
                 itemCount: prods.length,
                 itemBuilder: (context, i) {
                   dynamic document = {
-                    'id': prods[i].id,
-                    'title': prods[i].title,
-                    'author': prods[i].author,
-                    'description': prods[i].description,
-                    'price': prods[i].price,
-                    'condition': prods[i].condition,
-                    'images': prods[i].images,
-                    'createdAt': prods[i].createdAt,
-                    'categories': prods[i].categories,
+                    'id': prods[i]!.id,
+                    'title': prods[i]!.title,
+                    'author': prods[i]!.author,
+                    'description': prods[i]!.description,
+                    'price': prods[i]!.price,
+                    'condition': prods[i]!.condition,
+                    'images': prods[i]!.images,
+                    'createdAt': prods[i]!.createdAt,
+                    'categories': prods[i]!.categories,
                     'location': {
-                      'latitude': prods[i].location!.latitude!,
-                      'longitude': prods[i].location!.longitude!,
-                      'address': prods[i].location!.address!,
+                      'latitude': prods[i]!.location!.latitude!,
+                      'longitude': prods[i]!.location!.longitude!,
+                      'address': prods[i]!.location!.address!,
                     },
-                    'isFav': prods[i].isFav,
-                    'isSold': prods[i].isSold,
-                    'uid': prods[i].userId,
+                    'isFav': prods[i]!.isFav,
+                    'isSold': prods[i]!.isSold,
+                    'uid': prods[i]!.userId,
                   };
 
                   return AdItem(
@@ -205,7 +205,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
             )
-          : StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
+          : StreamBuilder<QuerySnapshot<Map<String?, dynamic>>>(
               stream: FirebaseFirestore.instance
                   .collection('products')
                   .orderBy('createdAt', descending: true)

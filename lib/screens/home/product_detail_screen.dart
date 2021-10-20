@@ -83,8 +83,11 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
     dynamic documents = args['documents'];
 
 
-      print( 'Compruebo args ${ args[documents] }');
+      print( 'Compruebo args ${ args['documents'] }');
     docId = documents['id'];
+
+      print( 'Compruebo docID $docId }');
+
     final bool isMe = args['isMe'];
     isSold = documents['isSold'];
     final images = documents['images'] as List<dynamic>;
@@ -304,7 +307,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                           Padding(
                             padding: EdgeInsets.symmetric(horizontal: 16),
                             child: Text(
-                              isSold ? 'Sold' : '₹${documents['price']}',
+                              isSold ? 'Sold' : '${documents['price']}',
                               style: TextStyle(
                                 fontSize: 22,
                                 fontWeight: FontWeight.bold,

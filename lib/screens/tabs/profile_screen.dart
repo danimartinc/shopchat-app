@@ -150,7 +150,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   SizedBox(
                     height: 25,
                   ),
-                  RaisedButton.icon(
+                  ElevatedButton.icon(
                     icon: Icon(
                       Icons.logout,
                     ),
@@ -160,7 +160,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               title: Text('Logout ?'),
                               content: Text('Do you want to log out ?'),
                               actions: [
-                                FlatButton(
+                                TextButton(
                                   child: Text(
                                     'NO',
                                     style: TextStyle(
@@ -169,7 +169,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   ),
                                   onPressed: () => Navigator.of(context).pop(),
                                 ),
-                                RaisedButton(
+                                
+                                ElevatedButton(
                                   child: Text('YES'),
                                   onPressed: () {
                                     _signOut();

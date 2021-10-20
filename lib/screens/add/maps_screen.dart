@@ -5,11 +5,11 @@ import 'package:shopchat_app/models/ad_location.dart';
 
 class GoogleMapScreen extends StatefulWidget {
   
-  final AdLocation? placeLocation;
+  final AdLocation placeLocation;
   final bool isEditable;
 
   GoogleMapScreen({
-    this.placeLocation,
+    required this.placeLocation,
     required this.isEditable,
   });
 
@@ -36,8 +36,8 @@ class _GoogleMapScreenState extends State<GoogleMapScreen> {
         Marker(
           markerId: MarkerId('id'),
           position: LatLng(
-            widget.placeLocation!.latitude!,
-            widget.placeLocation!.longitude!,
+            widget.placeLocation.latitude!,
+            widget.placeLocation.longitude!,
           ),
         )
       };
@@ -69,8 +69,8 @@ class _GoogleMapScreenState extends State<GoogleMapScreen> {
       body: GoogleMap(
         initialCameraPosition: CameraPosition(
           target: LatLng(
-            widget.placeLocation!.latitude!,
-            widget.placeLocation!.longitude!,
+            widget.placeLocation.latitude!,
+            widget.placeLocation.longitude!,
           ),
           zoom: 16,
         ),

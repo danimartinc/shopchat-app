@@ -240,7 +240,7 @@ class _AddingImagesScreenState extends State<AddingImagesScreen> {
                                         content:
                                             Text('You can add upto 3 photos'),
                                         actions: [
-                                          FlatButton(
+                                          ElevatedButton(
                                             child: Text('OK'),
                                             onPressed: () =>
                                                 Navigator.of(context).pop(),

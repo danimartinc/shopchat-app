@@ -43,7 +43,7 @@ class _FilterState extends State<Filter> {
         ),
         Padding(
           padding: const EdgeInsets.all(8.0),
-          child: RaisedButton(
+          child: ElevatedButton(
             child: Text('Apply'),
             onPressed: () => widget.range(rv),
           ),
