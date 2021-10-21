@@ -83,10 +83,10 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
     dynamic documents = args['documents'];
 
 
-      print( 'Compruebo args ${ args['documents'] }');
+    print( 'Compruebo args ${ args['documents'] }');
     docId = documents['id'];
 
-      print( 'Compruebo docID $docId }');
+    print( 'Compruebo docID $docId }');
 
     final bool isMe = args['isMe'];
     isSold = documents['isSold'];
