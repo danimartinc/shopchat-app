@@ -23,16 +23,17 @@ class _GoogleMapScreenState extends State<GoogleMapScreen> {
 
   void _selectLocation( LatLng position ) {
     setState(() {
+      print("actualizando ubicacion");
       pickedLocation = position;
     });
   }
 
   Set<Marker> get getMarker {
     
-    if ( pickedLocation == null && widget.isEditable ) {
+    if ( pickedLocation == null && !widget.isEditable ) {
       print('Entra en el null del pickedLocation');
       return {};
-    } else if ( widget.isEditable ) {
+    } else if ( widget.isEditable && pickedLocation == null) {
        print('Entra en el is Editable');
       return {
         Marker(

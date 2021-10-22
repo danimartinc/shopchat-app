@@ -80,10 +80,10 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
     ctx = context;
     UserModel? userData;
     final args = ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
-    dynamic documents = args['documents'];
+    dynamic documents = args['docs'];
 
 
-    print( 'Compruebo args ${ args['documents'] }');
+    print( 'Compruebo args ${ args['docs'] }');
     docId = documents['id'];
 
     print( 'Compruebo docID $docId }');
@@ -94,8 +94,8 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
     Timestamp dateTime = documents['createdAt'];
 
     mapUrl = Provider.of<AdProvider>(context, listen: false).getLocationFromLatLang(
-      latitude: (documents['location']['latitude'] as double),
-      longitude: (documents['location']['longitude'] as double),
+      latitude: (documents['location']['latitude'] as double?),
+      longitude: (documents['location']['longitude'] as double?),
     );
 
     return Scaffold(
@@ -221,8 +221,8 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
             return FutureBuilder(
                 future: Provider.of<AdProvider>(context, listen: false)
                     .getDistanceFromCoordinates(
-                  documents['location']['latitude'] as double,
-                  documents['location']['longitude'] as double,
+                  documents['location']['latitude'] as double?,
+                  documents['location']['longitude'] as double?,
                 ),
                 builder: (context, locSnapshot) {
                   return Padding(
@@ -356,7 +356,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                           padding: EdgeInsets.symmetric(
                                               horizontal: 4),
                                           child: Text(
-                                            documents['condition'] +
+                                            documents['condition'] ?? "" +
                                                 ' condition',
                                             textAlign: TextAlign.center,
                                             style: TextStyle(

@@ -73,7 +73,7 @@ class _PriceAndLocationScreenState extends State<PriceAndLocationScreen> {
  
 
       //Endpoint para realizar el Login
-      final uri = Uri.parse('https://maps.googleapis.com/maps/api/flutter_geocoder/json?latlng=$latitude,$longitude&key=$API_KEY');
+      final uri = Uri.parse('https://maps.googleapis.com/maps/api/geocode/json?latlng=$latitude,$longitude&key=$API_KEY');
 
       //Mapear la respuesta al modelo de tipo Usuario
       //Petición POST, en la cual enviamos el path del URL por argumento, obtenemos el apiURL desde el Enviroment
