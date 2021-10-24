@@ -56,7 +56,7 @@ class _BookInfoFormState extends State<BookInfoForm> {
         title,
         desc,
         author,
-        sliderValueMap[ sliderValue!.toInt().toDouble() ],
+        sliderValueMap[ sliderValue!.toInt().toString() ],
       );
 
       Navigator.of(context).pushNamed( AddingImagesScreen.routeName );

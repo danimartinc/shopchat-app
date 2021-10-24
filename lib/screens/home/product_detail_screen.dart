@@ -356,7 +356,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                           padding: EdgeInsets.symmetric(
                                               horizontal: 4),
                                           child: Text(
-                                            documents['condition'] ?? "" +
+                                            (documents['condition'] ?? "") +
                                                 ' condition',
                                             textAlign: TextAlign.center,
                                             style: TextStyle(

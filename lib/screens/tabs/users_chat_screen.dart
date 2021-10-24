@@ -56,7 +56,7 @@ class _UsersChatScreenState extends State<UsersChatScreen> {
                 print('${index + 1} times it comes here');
                 docId = documents[index]['docId'].toString();
                 if (docId.contains(uid)) {
-                  receiverId = docId.replaceAll(" ", '').trim();
+                  receiverId = docId.replaceAll(uid, "");
                   print("RID = $receiverId");
                   return FutureBuilder<DocumentSnapshot>(
                       future: FirebaseFirestore.instance
